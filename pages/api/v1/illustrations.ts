@@ -15,7 +15,7 @@ const handler: NextApiHandler = async (req, res) => {
   const { data } = await supabaseServer
     .from<Illustration>('illustrations')
     .select()
-    .range((page - 1) * limit, limit - 1)
+    .range((page - 1) * limit, limit * page - 1)
     .order(realSort, { ascending: isAscending });
 
   if (categories) {
@@ -24,7 +24,7 @@ const handler: NextApiHandler = async (req, res) => {
       .select()
       .range((page - 1) * limit, limit - 1)
       .order(realSort, { ascending: isAscending })
-      .filter('category', 'neq', `%${categories}%`);
+      .filter('category', 'ilike', `%${categories}%`);
 
     res.status(200).send({ data: data ?? [], message: 'Success' });
     return;
