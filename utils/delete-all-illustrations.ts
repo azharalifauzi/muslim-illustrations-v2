@@ -5,7 +5,7 @@ export const deleteAllIllustrations = async () => {
   const illustrations: Illustration[] = data.data;
 
   for (const illustration of illustrations) {
-    const id = illustration._id;
+    const id = illustration.id;
 
     await fetch(`/api/v1/illustrations/${id}`, {
       method: 'DELETE',
